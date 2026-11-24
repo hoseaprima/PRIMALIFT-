@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PRIMALIFT — Workout Programmer</title>
+<title>PRIMALIFT — Exercise Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -12,156 +12,168 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Jost,system-ui,"Segoe UI",sans-serif}
 h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;margin:0;line-height:1}
-button,input,select{font:inherit;color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0;border-radius:10px;padding:10px 16px;font-weight:600;letter-spacing:.03em;background:var(--btn);color:var(--onbtn)}
 button.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-button.sm{padding:5px 10px;font-size:.8rem}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-input,select{width:100%;padding:9px 11px;border-radius:10px;border:1.5px solid var(--line);background:var(--card)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.card:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+input,select,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--card)}
 label{display:block;font-size:.85rem;font-weight:600;color:var(--mute);margin-bottom:4px}
-.wrap{max-width:1000px;margin:0 auto;padding:0 18px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
 header{background:var(--brand);color:var(--onbrand);border-bottom:1px solid var(--gold);padding:22px 0 30px}
 .logo{letter-spacing:.22em;font:600 1.1rem "Cormorant Garamond",Georgia,serif}
 header h1{font-size:clamp(2.8rem,9vw,5rem);font-weight:500;margin:22px 0 10px}
-header p{margin:0;max-width:46ch;opacity:.85}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:-18px;position:relative;box-shadow:0 10px 26px -16px #17302b66}
-.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
-@media(max-width:640px){.fg{grid-template-columns:1fr 1fr}.fg .w{grid-column:1/-1}}
-h2{font-size:2.2rem;margin:30px 0 12px}
-.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px}
-.tabs button{flex:none;background:var(--card);color:var(--ink);border:1.5px solid var(--line)}
-.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.day{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 14px 14px;overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:520px}
-th{text-align:left;font-size:.78rem;color:var(--mute);padding:10px 6px 6px;font-weight:600}
-td{padding:6px;border-top:1px solid var(--line);vertical-align:middle}
-td input{padding:6px 8px;width:76px}td input.rp{width:92px}
-.nm b{display:block}.nm small{color:var(--mute)}
-.bar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
-.add{display:flex;gap:8px;margin-top:12px}.add select{flex:1}
-.note{margin-top:10px;border-left:3px solid var(--gold);padding:6px 12px;color:var(--mute)}
-.prog td:first-child{font-weight:600;white-space:nowrap}
-.saved{display:grid;gap:8px;padding-bottom:50px}
-.si{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
-.si small{color:var(--mute);display:block}
-.empty{text-align:center;padding:30px;border:2px dashed var(--line);border-radius:12px;color:var(--mute)}
-.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;z-index:9;font-weight:600}
-footer{text-align:center;color:var(--mute);font-size:.85rem;padding:0 18px 40px}
-@media print{header,.panel,.bar,.tabs,.add,.saved,.sv,footer,button,h2.nop{display:none!important}.day{border:0}body{background:#fff;color:#000}td input{border:0;background:none;width:auto}.pd{display:block!important}}
+header p{margin:0;max-width:44ch;opacity:.85}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 0 10px;border-bottom:1px solid var(--line)}
+.f{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;align-items:end}
+@media(max-width:640px){.f{grid-template-columns:1fr 1fr}.f .s{grid-column:1/-1}}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 2px;scrollbar-width:none}
+.chip{flex:none;background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:99px;padding:6px 16px;font-weight:500}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.count{color:var(--mute);font-size:.9rem;margin:16px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;padding-bottom:50px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;cursor:pointer;display:grid;gap:8px;box-shadow:0 10px 26px -18px #17302b66;position:relative}
+.card h3{font-size:1.5rem;padding-right:34px}
+.card small{color:var(--mute)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}.tag{font-size:.75rem;padding:2px 10px;border-radius:99px;border:1px solid var(--line);background:var(--bg)}
+.tag.lv{border-color:var(--gold)}
+.fav{position:absolute;top:10px;right:10px;background:transparent;color:var(--mute);font-size:1.3rem;padding:2px 8px}
+.fav[aria-pressed=true]{color:var(--gold)}
+.empty{grid-column:1/-1;text-align:center;padding:50px 16px;border:2px dashed var(--line);border-radius:10px;color:var(--mute)}
+dialog{border:0;border-radius:18px;padding:0;width:min(560px,94vw);max-height:92vh;background:var(--bg);color:var(--ink);box-shadow:0 20px 60px #0007}
+dialog::backdrop{background:#0b1613aa}
+.dh{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 20px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0}
+.dh h3{font-size:1.9rem}.db{padding:18px 20px 22px;display:grid;gap:14px}
+.db h4{margin:0 0 4px;font:600 1.2rem "Cormorant Garamond",Georgia,serif}
+ol{margin:0;padding-left:20px}ol li{margin-bottom:4px}
+.tip{border-left:3px solid var(--gold);padding:8px 12px;background:var(--card);border-radius:0 8px 8px 0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+footer{text-align:center;color:var(--mute);font-size:.85rem;padding:0 0 40px}
 </style>
 </head>
 <body>
 <header><div class="wrap">
   <div class="logo">PRIMALIFT</div>
-  <h1>Workout Programmer</h1>
-  <p>Susun program latihan mingguan sesuai tujuan, level, dan jumlah hari. Hasilnya bisa kamu edit, simpan, dan cetak.</p>
+  <h1>Exercise Library</h1>
+  <p>Kumpulan latihan lengkap dengan cara melakukan dan tips bentuk gerakan. Simpan favorit, atau tambahkan latihanmu sendiri.</p>
 </div></header>
 
+<div class="bar"><div class="wrap">
+  <div class="f">
+    <div class="s"><label for="q">Cari latihan</label><input id="q" type="search" placeholder="contoh: squat, biceps, dumbbell"></div>
+    <div><label for="eq">Alat</label><select id="eq"></select></div>
+    <div><label for="lv">Level</label><select id="lv"></select></div>
+    <button class="ghost" id="favOnly" aria-pressed="false">☆ Favorit</button>
+  </div>
+  <div class="chips" id="mus" role="group" aria-label="Kelompok otot"></div>
+</div></div>
+
 <main class="wrap">
-  <section class="panel" aria-label="Pengaturan program">
-    <div class="fg">
-      <div class="w"><label for="pn">Nama program / client</label><input id="pn" placeholder="contoh: Program Budi, 8 minggu"></div>
-      <div><label for="pg">Tujuan</label><select id="pg"><option value="hyp">Hipertrofi (otot)</option><option value="str">Kekuatan</option><option value="fat">Fat loss</option></select></div>
-      <div><label for="pl">Level</label><select id="pl"><option>Pemula</option><option selected>Menengah</option><option>Lanjutan</option></select></div>
-      <div><label for="pd">Hari latihan per minggu</label><select id="pd"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option></select></div>
-      <div><label for="ps">Split</label><select id="ps"><option value="">Otomatis (disarankan)</option><option value="fb">Full Body</option><option value="ul">Upper / Lower</option><option value="ppl">Push Pull Legs</option></select></div>
-      <div><label for="pw">Durasi (minggu)</label><select id="pw"><option>4</option><option>6</option><option selected>8</option><option>12</option></select></div>
-    </div>
-    <button id="gen">Buat program</button>
-  </section>
-
-  <div id="out"></div>
-
-  <h2 class="nop">Program tersimpan</h2>
-  <div class="saved" id="saved"></div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="list"></div>
+  <p style="text-align:center"><button id="add">+ Tambah latihan sendiri</button></p>
+  <footer>Favorit dan latihan buatanmu tersimpan di browser perangkat ini. Hentikan latihan jika terasa nyeri tajam dan konsultasikan ke pelatih atau tenaga medis.</footer>
 </main>
-<footer>Program tersimpan di browser perangkat ini. Ini panduan umum, sesuaikan dengan kondisi tubuh client dan konsultasikan dengan tenaga medis jika ada cedera.</footer>
+
+<dialog id="dDet"><div class="dh"><h3 id="dN"></h3><button class="ghost" data-close>Tutup</button></div><div class="db" id="dB"></div></dialog>
+
+<dialog id="dAdd"><form method="dialog" id="fAdd" style="display:contents">
+  <div class="dh"><h3>Tambah latihan</h3><button type="button" class="ghost" data-close>Tutup</button></div>
+  <div class="db">
+    <div><label for="an">Nama latihan *</label><input id="an" required></div>
+    <div class="g2"><div><label for="am">Kelompok otot</label><select id="am"></select></div><div><label for="ae">Alat</label><select id="ae"></select></div></div>
+    <div class="g2"><div><label for="al">Level</label><select id="al"></select></div><div><label for="ap">Otot utama</label><input id="ap" placeholder="contoh: Biceps"></div></div>
+    <div><label for="as">Langkah (satu baris satu langkah) *</label><textarea id="as" rows="4" required></textarea></div>
+    <div><label for="at">Tips</label><input id="at"></div>
+    <button>Simpan latihan</button>
+  </div>
+</form></dialog>
 
 <script>
 (function(){
-var $=function(s){return document.querySelector(s)};
-var EX={'Dada':[['Barbell Bench Press',1],['Incline Dumbbell Press',1],['Push-up',0],['Cable Fly',0],['Pec Deck Machine',0],['Dips (dada)',0]],
-'Punggung':[['Deadlift',1],['Pull-up',1],['Lat Pulldown',1],['Barbell Row',1],['Seated Cable Row',0],['One-Arm Dumbbell Row',0]],
-'Bahu':[['Overhead Press',1],['Dumbbell Shoulder Press',1],['Arnold Press',1],['Lateral Raise',0]],
-'Bahu belakang':[['Face Pull',0],['Rear Delt Fly',0]],
-'Biceps':[['Barbell Curl',0],['Hammer Curl',0],['Incline Dumbbell Curl',0]],
-'Triceps':[['Triceps Pushdown',0],['Skull Crusher',0],['Overhead Triceps Extension',0]],
-'Kaki':[['Barbell Back Squat',1],['Leg Press',1],['Romanian Deadlift',1],['Walking Lunge',0],['Leg Extension',0],['Lying Leg Curl',0],['Standing Calf Raise',0]],
-'Glutes':[['Hip Thrust',1],['Bulgarian Split Squat',1],['Glute Bridge',0]],
-'Core':[['Plank',0],['Hanging Leg Raise',0],['Cable Crunch',0],['Russian Twist',0]]};
-var SPL={fb:{n:'Full Body',d:[['Full Body A',['Kaki','Dada','Punggung','Bahu','Core']],['Full Body B',['Glutes','Punggung','Dada','Biceps','Triceps']]]},
-ul:{n:'Upper / Lower',d:[['Upper',['Dada','Punggung','Bahu','Bahu belakang','Biceps','Triceps']],['Lower',['Kaki','Glutes','Kaki','Kaki','Core']]]},
-ppl:{n:'Push Pull Legs',d:[['Push',['Dada','Dada','Bahu','Bahu','Triceps']],['Pull',['Punggung','Punggung','Punggung','Bahu belakang','Biceps']],['Legs',['Kaki','Kaki','Glutes','Kaki','Core']]]}};
-var G={hyp:{c:[4,'6-10',120],a:[3,'10-15',75]},str:{c:[5,'3-5',180],a:[3,'8-10',90]},fat:{c:[3,'10-12',75],a:[3,'12-15',45]}};
-var GN={hyp:'Hipertrofi',str:'Kekuatan',fat:'Fat loss'};
-var KEY='primalift-prog',saved=[],prog=null,cur=0;
-try{saved=JSON.parse(localStorage.getItem(KEY))||[]}catch(e){}
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){toast('Gagal menyimpan')}}
+var RAW=`Barbell Bench Press;Dada;Barbell;Menengah;Pectoralis mayor, triceps;Berbaring dan pegang bar sedikit lebih lebar dari bahu~Turunkan bar ke dada tengah dengan terkontrol~Dorong naik sampai lengan lurus;Rapatkan tulang belikat dan jaga kaki menapak kuat
+Incline Dumbbell Press;Dada;Dumbbell;Menengah;Dada atas, bahu depan;Atur bangku 30-45 derajat~Dorong dumbbell dari sisi dada ke atas~Turunkan pelan sampai siku sejajar badan;Bangku jangan terlalu tinggi, nanti bahu yang bekerja
+Push-up;Dada;Bodyweight;Pemula;Dada, triceps, core;Tangan selebar bahu, badan lurus seperti papan~Turunkan dada hampir menyentuh lantai~Dorong kembali ke atas;Kencangkan perut dan glutes, jangan melengkung pinggang
+Cable Fly;Dada;Cable;Menengah;Dada;Berdiri di tengah kabel, pegang gagang dari samping~Tarik ke depan dada seperti memeluk~Kembali pelan;Gerakan dari bahu dengan siku sedikit ditekuk
+Dips (dada);Dada;Bodyweight;Lanjutan;Dada bawah, triceps;Condongkan badan ke depan di bar paralel~Turunkan sampai bahu sejajar siku~Dorong naik;Berhenti jika bahu terasa nyeri
+Pec Deck Machine;Dada;Mesin;Pemula;Dada;Duduk dengan punggung menempel~Dekatkan kedua lengan di depan dada~Kembali pelan;Pilih beban yang membuat gerakan tetap penuh
+Deadlift;Punggung;Barbell;Lanjutan;Punggung bawah, glutes, hamstring;Berdiri dengan bar di atas tengah kaki~Tekuk pinggul, pegang bar, dada terangkat~Dorong lantai dengan kaki sampai berdiri tegak;Bar dekat tubuh dan punggung tetap netral
+Pull-up;Punggung;Bodyweight;Lanjutan;Latissimus, biceps;Pegang bar lebih lebar dari bahu~Tarik dada ke arah bar~Turun pelan sampai lengan lurus;Mulai dengan menurunkan bahu, jangan mengayun
+Lat Pulldown;Punggung;Cable;Pemula;Latissimus;Duduk dan pegang bar lebar~Tarik bar ke dada atas~Kembali pelan;Jangan condong ke belakang berlebihan
+Barbell Row;Punggung;Barbell;Menengah;Punggung tengah, lat;Tekuk pinggul sekitar 45 derajat dengan punggung lurus~Tarik bar ke perut bawah~Turunkan terkontrol;Torso stabil dan jangan ayun
+Seated Cable Row;Punggung;Cable;Pemula;Punggung tengah;Duduk tegak dengan kaki menahan~Tarik gagang ke perut, rapatkan tulang belikat~Kembali pelan;Tahan 1 detik saat berkontraksi
+One-Arm Dumbbell Row;Punggung;Dumbbell;Pemula;Lat, punggung tengah;Satu tangan dan lutut bertumpu di bangku~Tarik dumbbell ke arah pinggul~Turunkan pelan;Siku dekat badan dan pinggul tidak berputar
+Face Pull;Punggung;Cable;Pemula;Bahu belakang, rotator cuff;Atur kabel setinggi wajah dengan tali~Tarik ke arah wajah dengan siku tinggi~Kembali terkontrol;Pakai beban ringan dan fokus ke bentuk
+Overhead Press;Bahu;Barbell;Menengah;Deltoid, triceps;Berdiri dengan bar di depan bahu~Dorong bar ke atas sampai lengan lurus~Turunkan ke bahu;Kencangkan perut dan glutes
+Dumbbell Shoulder Press;Bahu;Dumbbell;Pemula;Deltoid;Duduk dengan dumbbell sejajar telinga~Dorong ke atas~Turunkan terkontrol;Jangan melengkungkan punggung
+Lateral Raise;Bahu;Dumbbell;Pemula;Deltoid samping;Berdiri dengan dumbbell di sisi badan~Angkat lengan ke samping sampai sejajar bahu~Turunkan pelan;Beban ringan dan siku sedikit ditekuk
+Rear Delt Fly;Bahu;Dumbbell;Pemula;Deltoid belakang;Condong ke depan dengan punggung lurus~Angkat lengan ke samping~Kembali pelan;Bayangkan memutar siku, bukan tangan
+Arnold Press;Bahu;Dumbbell;Menengah;Seluruh deltoid;Mulai dengan telapak menghadap wajah~Putar sambil mendorong ke atas~Putar balik saat turun;Gerakan halus dengan beban moderat
+Barbell Curl;Lengan;Barbell;Pemula;Biceps;Berdiri dan pegang bar telapak ke atas~Angkat bar ke arah bahu~Turunkan pelan;Siku diam di sisi badan
+Hammer Curl;Lengan;Dumbbell;Pemula;Biceps, brachialis;Pegang dumbbell dengan telapak saling berhadapan~Angkat ke arah bahu~Turunkan pelan;Jangan mengayun badan
+Incline Dumbbell Curl;Lengan;Dumbbell;Menengah;Biceps (kepala panjang);Duduk di bangku miring dengan lengan menggantung~Angkat dumbbell ke atas~Turunkan sampai lengan lurus penuh;Regangan di bawah adalah kuncinya
+Triceps Pushdown;Lengan;Cable;Pemula;Triceps;Berdiri dan pegang tali atau bar kabel atas~Dorong ke bawah sampai lengan lurus~Kembali sampai tangan sejajar dada;Siku tetap di samping badan
+Skull Crusher;Lengan;Barbell;Menengah;Triceps;Berbaring dengan bar di atas dada~Tekuk siku sehingga bar turun ke arah dahi~Luruskan kembali;Hanya siku yang bergerak
+Overhead Triceps Extension;Lengan;Dumbbell;Pemula;Triceps (kepala panjang);Pegang satu dumbbell dengan dua tangan di atas kepala~Tekuk siku ke belakang kepala~Luruskan ke atas;Jaga siku tidak melebar
+Barbell Back Squat;Kaki;Barbell;Menengah;Quads, glutes;Letakkan bar di punggung atas, kaki selebar bahu~Turunkan pinggul sampai paha sejajar lantai~Dorong naik lewat tumit;Lutut searah jari kaki dan dada tegak
+Leg Press;Kaki;Mesin;Pemula;Quads, glutes;Duduk dengan kaki selebar bahu di platform~Turunkan sampai lutut sekitar 90 derajat~Dorong kembali tanpa mengunci lutut;Pinggul tetap menempel di sandaran
+Romanian Deadlift;Kaki;Barbell;Menengah;Hamstring, glutes;Berdiri dengan bar di depan paha~Dorong pinggul ke belakang, bar meluncur di kaki~Berdiri sambil menjepit glutes;Lutut sedikit ditekuk dan punggung lurus
+Walking Lunge;Kaki;Dumbbell;Menengah;Quads, glutes;Melangkah besar ke depan~Turunkan lutut belakang hampir ke lantai~Dorong ke langkah berikutnya;Badan tegak dan langkah cukup panjang
+Leg Extension;Kaki;Mesin;Pemula;Quads;Duduk dengan bantalan di atas pergelangan kaki~Luruskan lutut~Turunkan pelan;Tahan sebentar di atas
+Lying Leg Curl;Kaki;Mesin;Pemula;Hamstring;Telungkup dengan bantalan di atas tumit~Tekuk lutut ke arah glutes~Kembali pelan;Pinggul tetap menempel
+Standing Calf Raise;Kaki;Mesin;Pemula;Betis;Berdiri bertumpu di ujung kaki~Naik setinggi mungkin~Turun sampai regangan penuh;Tahan 1-2 detik di atas
+Hip Thrust;Glutes;Barbell;Menengah;Glutes;Sandarkan punggung atas di bangku dengan bar di pinggul~Dorong pinggul ke atas sampai tubuh lurus~Turunkan terkontrol;Dagu menunduk dan jepit glutes di atas
+Glute Bridge;Glutes;Bodyweight;Pemula;Glutes;Berbaring dengan lutut ditekuk~Angkat pinggul~Turun pelan;Tumit mendorong lantai
+Bulgarian Split Squat;Glutes;Dumbbell;Lanjutan;Glutes, quads;Letakkan kaki belakang di bangku~Turunkan lutut belakang~Dorong naik lewat tumit depan;Condong sedikit ke depan untuk menekankan glutes
+Plank;Core;Bodyweight;Pemula;Core;Bertumpu di siku dan ujung kaki~Jaga tubuh tetap lurus~Tahan 30-60 detik;Perut kencang dan jangan turunkan pinggul
+Hanging Leg Raise;Core;Bodyweight;Lanjutan;Perut bawah;Menggantung di bar~Angkat kaki sampai sejajar pinggul atau lebih~Turun pelan;Hindari mengayun
+Cable Crunch;Core;Cable;Menengah;Perut;Berlutut dan pegang tali di dekat kepala~Gulung badan ke arah lutut~Kembali pelan;Gerakan dari perut, bukan pinggul
+Russian Twist;Core;Bodyweight;Pemula;Oblique;Duduk dengan kaki terangkat sedikit~Putar badan ke kiri dan kanan~Jaga gerakan terkontrol;Putar dari dada, bukan lengan`;
+var MUS=['Dada','Punggung','Bahu','Lengan','Kaki','Glutes','Core'],EQ=['Bodyweight','Barbell','Dumbbell','Cable','Mesin'],LV=['Pemula','Menengah','Lanjutan'];
+var KEY='primalift-lib',S={fav:[],custom:[]},$=function(s){return document.querySelector(s)};
+var base=RAW.split('\n').map(function(l,i){var p=l.split(';');return{id:'b'+i,n:p[0],m:p[1],e:p[2],l:p[3],p:p[4],s:p[5].split('~'),t:p[6]}});
+try{var d=JSON.parse(localStorage.getItem(KEY));if(d)S=d}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-function toast(t){var e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(function(){e.remove()},2200)}
-function rec(d){return d<=3?'fb':d===4?'ul':'ppl'}
-function row(name,g,c,goal,level){
-  var p=G[goal][c?'c':'a'],s=p[0]-(level==='Pemula'?1:0)+(level==='Lanjutan'&&c&&goal!=='fat'?1:0);
-  return{ex:name,g:g,c:c,sets:Math.max(2,s),reps:p[1],rest:p[2]};
+function all(){return base.concat(S.custom)}
+function opts(a,first){return(first?'<option value="">'+first+'</option>':'')+a.map(function(x){return'<option>'+x+'</option>'}).join('')}
+$('#eq').innerHTML=opts(EQ,'Semua alat');$('#lv').innerHTML=opts(LV,'Semua level');
+$('#am').innerHTML=opts(MUS);$('#ae').innerHTML=opts(EQ);$('#al').innerHTML=opts(LV);
+var mus='',favOnly=false;
+function chips(){$('#mus').innerHTML=['Semua'].concat(MUS).map(function(m){var v=m==='Semua'?'':m;return'<button class="chip" data-m="'+v+'" aria-pressed="'+(mus===v)+'">'+m+'</button>'}).join('')}
+function render(){
+  var q=$('#q').value.toLowerCase().trim(),eq=$('#eq').value,lv=$('#lv').value;
+  var r=all().filter(function(x){return(!q||(x.n+' '+x.p+' '+x.m+' '+x.e).toLowerCase().indexOf(q)>-1)&&(!mus||x.m===mus)&&(!eq||x.e===eq)&&(!lv||x.l===lv)&&(!favOnly||S.fav.indexOf(x.id)>-1)});
+  $('#count').textContent=r.length+' latihan';
+  $('#list').innerHTML=r.map(function(x){var f=S.fav.indexOf(x.id)>-1;
+    return'<article class="card" tabindex="0" data-id="'+x.id+'"><button class="fav" data-fav="'+x.id+'" aria-pressed="'+f+'" aria-label="Favorit '+esc(x.n)+'">'+(f?'★':'☆')+'</button><h3>'+esc(x.n)+'</h3><div class="tags"><span class="tag">'+esc(x.m)+'</span><span class="tag">'+esc(x.e)+'</span><span class="tag lv">'+esc(x.l)+'</span></div><small>'+esc(x.p)+'</small></article>'}).join('')||'<div class="empty">Tidak ada latihan yang cocok. Coba ubah filter.</div>';
 }
-function build(){
-  var goal=$('#pg').value,level=$('#pl').value,days=+$('#pd').value,weeks=+$('#pw').value,sp=$('#ps').value||rec(days),T=SPL[sp].d,cnt={},plan=[];
-  for(var i=0;i<days;i++){
-    var t=T[i%T.length],used=[],k={},rows=[];
-    t[1].forEach(function(g){
-      var n=k[g]=(k[g]||0)+1-0,first=(k[g]===1),pool=EX[g],cand=pool.filter(function(x){return x[1]===(first?1:0)});
-      if(!cand.length)cand=pool;
-      var key=g+(first?'1':'2'),ex,tries=0;
-      do{ex=cand[((cnt[key]=(cnt[key]||0)+1)-1)%cand.length];tries++}while(used.indexOf(ex[0])>-1&&tries<cand.length+1);
-      if(used.indexOf(ex[0])>-1){ex=pool.find(function(x){return used.indexOf(x[0])<0})||ex}
-      used.push(ex[0]);rows.push(row(ex[0],g,ex[1],goal,level));
-    });
-    plan.push({name:'Hari '+(i+1)+' — '+t[0],rows:rows,note:goal==='fat'?'Tambahan: kardio 10-15 menit setelah latihan (jalan cepat miring atau sepeda).':''});
-  }
-  return{name:$('#pn').value.trim()||'Program tanpa nama',goal:goal,level:level,days:days,weeks:weeks,split:SPL[sp].n,plan:plan,date:new Date().toISOString().slice(0,10)};
+function detail(id){
+  var x=all().find(function(a){return a.id===id});if(!x)return;var f=S.fav.indexOf(id)>-1;
+  $('#dN').textContent=x.n;
+  $('#dB').innerHTML='<div class="tags"><span class="tag">'+esc(x.m)+'</span><span class="tag">'+esc(x.e)+'</span><span class="tag lv">'+esc(x.l)+'</span></div><div><h4>Otot utama</h4>'+esc(x.p||'-')+'</div><div><h4>Cara melakukan</h4><ol>'+x.s.map(function(s){return'<li>'+esc(s)+'</li>'}).join('')+'</ol></div>'+(x.t?'<div class="tip"><b>Tips:</b> '+esc(x.t)+'</div>':'')+
+  '<div class="row"><button data-fav="'+id+'" data-d="1">'+(f?'★ Hapus dari favorit':'☆ Simpan ke favorit')+'</button>'+(id[0]==='c'?'<button class="ghost" data-del="'+id+'">Hapus latihan</button>':'')+'</div>';
+  if(!$('#dDet').open)$('#dDet').showModal();
 }
-function weekly(p){
-  var N=p.weeks,h='';
-  for(var w=1;w<=N;w++){
-    var txt,rpe;
-    if(w===N){rpe='6';txt='Deload. Kurangi set sekitar 40%, beban sama, fokus teknik dan pemulihan.'}
-    else if(w===1){rpe='7';txt='Kenali beban. Sisakan sekitar 3 repetisi sebelum gagal.'}
-    else{rpe=(7+Math.round((w-1)*(2/(N-2))*2)/2).toFixed(1).replace('.0','');if(+rpe>9)rpe='9';txt='Naikkan beban 2,5% atau tambah 1 repetisi jika semua set mencapai batas atas rep.'}
-    h+='<tr><td>Minggu '+w+'</td><td>RPE '+rpe+'</td><td>'+txt+'</td></tr>';
-  }
-  return'<table class="prog"><thead><tr><th>Minggu</th><th>Target</th><th>Panduan</th></tr></thead><tbody>'+h+'</tbody></table>';
-}
-function show(){
-  if(!prog){$('#out').innerHTML='';return}
-  var d=prog.plan[cur];
-  $('#out').innerHTML='<h2 class="nop">'+esc(prog.name)+'</h2><div class="note" style="margin:0 0 12px">'+GN[prog.goal]+' · '+prog.level+' · '+prog.days+' hari/minggu · '+prog.split+' · '+prog.weeks+' minggu</div>'+
-  '<div class="tabs" role="tablist">'+prog.plan.map(function(x,i){return'<button role="tab" data-tab="'+i+'" aria-selected="'+(i===cur)+'">Hari '+(i+1)+'</button>'}).join('')+'</div>'+
-  '<div class="day"><h3 style="font-size:1.6rem;margin:14px 6px 4px">'+esc(d.name)+'</h3><table><thead><tr><th>Latihan</th><th>Set</th><th>Rep</th><th>Rest (dtk)</th><th></th></tr></thead><tbody>'+
-  d.rows.map(function(r,i){return'<tr><td class="nm"><b>'+esc(r.ex)+'</b><small>'+esc(r.g)+(r.c?' · compound':'')+'</small></td><td><input type="number" min="1" data-f="sets" data-i="'+i+'" value="'+r.sets+'" aria-label="Set"></td><td><input class="rp" data-f="reps" data-i="'+i+'" value="'+esc(r.reps)+'" aria-label="Rep"></td><td><input type="number" step="15" data-f="rest" data-i="'+i+'" value="'+r.rest+'" aria-label="Rest"></td><td><button class="ghost sm" data-swap="'+i+'">Ganti</button> <button class="ghost sm" data-rm="'+i+'" aria-label="Hapus">✕</button></td></tr>'}).join('')+'</tbody></table>'+
-  '<div class="add"><select id="addsel">'+Object.keys(EX).map(function(g){return'<optgroup label="'+g+'">'+EX[g].map(function(x){return'<option value="'+g+'|'+x[0]+'|'+x[1]+'">'+x[0]+'</option>'}).join('')+'</optgroup>'}).join('')+'</select><button class="ghost" id="addbtn">+ Tambah</button></div>'+
-  (d.note?'<div class="note">'+esc(d.note)+'</div>':'')+'</div>'+
-  '<h2 class="nop">Progres mingguan</h2><div class="day">'+weekly(prog)+'<div class="note">RPE = seberapa berat set terasa (10 = tidak sanggup lagi). Catat beban tiap sesi agar progres terlihat.</div></div>'+
-  '<div class="bar"><button id="sv">Simpan program</button><button class="ghost" id="pr">Cetak / PDF</button><button class="ghost" id="dl">Unduh JSON</button></div>';
-}
-function renderSaved(){
-  $('#saved').innerHTML=saved.length?saved.map(function(p,i){return'<div class="si"><span><b>'+esc(p.name)+'</b><small>'+GN[p.goal]+' · '+p.days+' hari · '+p.weeks+' minggu · '+p.date+'</small></span><span><button class="ghost sm" data-load="'+i+'">Buka</button> <button class="ghost sm" data-del="'+i+'">Hapus</button></span></div>'}).join(''):'<div class="empty">Belum ada program tersimpan.</div>';
-}
-$('#gen').onclick=function(){prog=build();cur=0;show();$('#out').scrollIntoView({behavior:'smooth'})};
+function toggleFav(id){var i=S.fav.indexOf(id);if(i>-1)S.fav.splice(i,1);else S.fav.push(id);save();render()}
 document.addEventListener('click',function(e){
-  var t=e.target,d=t.dataset;
-  if(d.tab!==undefined){cur=+d.tab;show()}
-  if(d.rm!==undefined){prog.plan[cur].rows.splice(+d.rm,1);show()}
-  if(d.swap!==undefined){var r=prog.plan[cur].rows[+d.swap],pool=EX[r.g],used=prog.plan[cur].rows.map(function(x){return x.ex}),alt=pool.filter(function(x){return used.indexOf(x[0])<0});
-    if(!alt.length){toast('Tidak ada pengganti lain');return}var n=alt[Math.floor(Math.random()*alt.length)];r.ex=n[0];r.c=n[1];show()}
-  if(t.id==='addbtn'){var v=$('#addsel').value.split('|');prog.plan[cur].rows.push(row(v[1],v[0],+v[2],prog.goal,prog.level));show()}
-  if(t.id==='sv'){var i=saved.findIndex(function(p){return p.name===prog.name});prog.date=new Date().toISOString().slice(0,10);if(i>-1)saved[i]=JSON.parse(JSON.stringify(prog));else saved.unshift(JSON.parse(JSON.stringify(prog)));persist();renderSaved();toast('Program disimpan')}
-  if(t.id==='pr')window.print();
-  if(t.id==='dl'){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(prog,null,1)],{type:'application/json'}));a.download=prog.name.replace(/[^\w-]+/g,'_')+'.json';a.click()}
-  if(d.load!==undefined){prog=JSON.parse(JSON.stringify(saved[+d.load]));cur=0;show();$('#out').scrollIntoView({behavior:'smooth'})}
-  if(d.del!==undefined&&confirm('Hapus program ini?')){saved.splice(+d.del,1);persist();renderSaved()}
+  var t=e.target;
+  if(t.hasAttribute('data-close')){t.closest('dialog').close();return}
+  if(t.dataset.m!==undefined&&t.classList.contains('chip')){mus=t.dataset.m;chips();render();return}
+  if(t.dataset.fav){toggleFav(t.dataset.fav);if(t.dataset.d)detail(t.dataset.fav);return}
+  if(t.dataset.del){S.custom=S.custom.filter(function(c){return c.id!==t.dataset.del});S.fav=S.fav.filter(function(f){return f!==t.dataset.del});save();$('#dDet').close();render();return}
+  var c=t.closest('.card');if(c)detail(c.dataset.id);
 });
-document.addEventListener('change',function(e){var t=e.target;if(t.dataset.f){var r=prog.plan[cur].rows[+t.dataset.i];r[t.dataset.f]=t.dataset.f==='reps'?t.value:+t.value||0}});
-renderSaved();
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList.contains('card'))detail(e.target.dataset.id)});
+$('#q').oninput=$('#eq').onchange=$('#lv').onchange=render;
+$('#favOnly').onclick=function(){favOnly=!favOnly;this.setAttribute('aria-pressed',favOnly);this.textContent=(favOnly?'★':'☆')+' Favorit';render()};
+$('#add').onclick=function(){$('#fAdd').reset();$('#dAdd').showModal()};
+$('#fAdd').onsubmit=function(){
+  var st=$('#as').value.split('\n').map(function(s){return s.trim()}).filter(Boolean);
+  S.custom.push({id:'c'+Date.now().toString(36),n:$('#an').value.trim(),m:$('#am').value,e:$('#ae').value,l:$('#al').value,p:$('#ap').value.trim(),s:st,t:$('#at').value.trim()});
+  save();render();
+};
+chips();render();
 })();
 </script>
 </body>
